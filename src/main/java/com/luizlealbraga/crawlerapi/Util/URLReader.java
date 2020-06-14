@@ -18,12 +18,12 @@ public class URLReader {
 
 		con.setDoOutput(true); // we want the response
 		con.setRequestProperty("Cookie", "myCookie=test123");
-		con.setConnectTimeout(30000000);
+		con.setConnectTimeout(0);
 		con.connect();
 		if (con.getResponseCode() == 429) {
 			do {
-				System.out.println("Waiting to retry after:"+(Integer.parseInt(con.getHeaderField("Retry-After"))+10) + "Seconds");
-				TimeUnit.SECONDS.sleep(Integer.parseInt(con.getHeaderField("Retry-After"))+10);
+				System.out.println("Waiting to retry after:"+(Integer.parseInt(con.getHeaderField("Retry-After"))+2) + "Seconds");
+				TimeUnit.SECONDS.sleep(Integer.parseInt(con.getHeaderField("Retry-After"))+2);
 				con.disconnect();
 				urlObj = new URL(this.formatUrl(inputUrl));
 				con = (HttpsURLConnection) urlObj.openConnection();
