@@ -8,18 +8,14 @@ import com.google.gson.annotations.SerializedName;
 import com.luizlealbraga.crawlerapi.Util.DataSizeManipulator;
 
 public class CapturedDataDto {
-	private Double totalSize;
-	private Integer totalLines;
-	private Integer totalOccurrence;
 	@Expose
 	@SerializedName("size")
-	private String returnTotalSize;
+	private Double totalSize;
 	@Expose
 	@SerializedName("lines")
-	private String returnTotalLines;
-	@Expose
+	private Integer totalLines;
 	@SerializedName("occurrences")
-	private String returnTotalOccurrence;
+	private Integer totalOccurrence;
 
 	public CapturedDataDto() {
 		this.totalLines = 0;
@@ -55,44 +51,6 @@ public class CapturedDataDto {
 
 	public void setTotalOccurrence(Integer totalOccurrence) {
 		this.totalOccurrence = totalOccurrence;
-	}
-
-	public String getrTotalSize() {
-		return returnTotalSize;
-	}
-
-	public void setrTotalSize(String rTotalSize) {
-		this.returnTotalSize = rTotalSize;
-	}
-
-	public String getrTotalLines() {
-		return returnTotalLines;
-	}
-
-	public void setreturnTotalLines(String rTotalLines) {
-		this.returnTotalLines = rTotalLines;
-	}
-
-	public String getreturnTotalOccurrence() {
-		return returnTotalOccurrence;
-	}
-
-	public void setreturnTotalOccurrence(String returnTotalOccurrence) {
-		this.returnTotalOccurrence = returnTotalOccurrence;
-	}
-
-	public HashMap<String, CapturedDataDto> generateFormatedResult(HashMap<String, CapturedDataDto> map,
-			String responseSizeFormat) {
-		Set<String> mapkeys = map.keySet();
-		for (String key : mapkeys) {
-			if (key != null) {
-				CapturedDataDto capturedDataDto = map.get(key);
-				capturedDataDto.setrTotalSize(capturedDataDto.getTotalSize() + " " + new DataSizeManipulator().formatType(responseSizeFormat));
-				capturedDataDto.setreturnTotalLines(capturedDataDto.getTotalLines() + " Lines");
-				capturedDataDto.setreturnTotalOccurrence(capturedDataDto.getTotalOccurrence() + " Occurrences");
-			}
-		}
-		return map;
 	}
 
 	public void sumTotalLines(Integer totalLines) {

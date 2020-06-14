@@ -4,34 +4,46 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.net.URLConnection;
+import java.util.concurrent.TimeUnit;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class URLReader {
 
-	public String getUrlHtml(String inputUrl) throws IOException{
-		String outputUrl=null;
+	public String getUrlHtml(String inputUrl) throws IOException, InterruptedException {
+		System.out.println(inputUrl);
+		String outputUrl = null;
 		URL urlObj = new URL(this.formatUrl(inputUrl));
-        URLConnection con = urlObj.openConnection();
+		HttpsURLConnection con = (HttpsURLConnection) urlObj.openConnection();
 
-        con.setDoOutput(true); // we want the response 
-        con.setRequestProperty("Cookie", "myCookie=test123");
-        con.setConnectTimeout(30000000);
-        con.connect();
+		con.setDoOutput(true); // we want the response
+		con.setRequestProperty("Cookie", "myCookie=test123");
+		con.setConnectTimeout(30000000);
+		con.connect();
+		if (con.getResponseCode() == 429) {
+			do {
+				System.out.println("Waiting to retry after:"+(Integer.parseInt(con.getHeaderField("Retry-After"))+10) + "Seconds");
+				TimeUnit.SECONDS.sleep(Integer.parseInt(con.getHeaderField("Retry-After"))+10);
+				con.disconnect();
+				urlObj = new URL(this.formatUrl(inputUrl));
+				con = (HttpsURLConnection) urlObj.openConnection();
+				con.connect();
+			} while (con.getResponseCode() == 429);
+		}
 
-        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
-        StringBuilder response = new StringBuilder();
-        String inputLine;
+		StringBuilder response = new StringBuilder();
+		String inputLine;
 
-        String newLine = System.getProperty("line.separator");
-        while ((inputLine = in.readLine()) != null)
-        {
-            response.append(inputLine + newLine);
-        }
+		String newLine = System.getProperty("line.separator");
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine + newLine);
+		}
 
-        in.close();
-
-        outputUrl = response.toString();
+		in.close();
+		con.disconnect();
+		outputUrl = response.toString();
 		return outputUrl;
 	}
 

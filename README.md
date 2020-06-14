@@ -63,45 +63,28 @@ Finally, if all steps were completed when making the request, you will get a ret
 
 ```
 {
-    "mp4": {
-        "size": "1.77209344E7 Bytes",
-        "lines": "0 Lines"
-    },
-    "jpg": {
-        "size": "1567211.5199999998 Bytes",
-        "lines": "0 Lines"
-    },
-    "txt": {
-        "size": "338.0 Bytes",
-        "lines": "12 Lines"
-    },
-    "mp3": {
-        "size": "9835642.879999999 Bytes",
-        "lines": "0 Lines"
-    },
-    "css": {
-        "size": "38874.36 Bytes",
-        "lines": "2449 Lines"
-    },
-    "gif": {
-        "size": "4925.44 Bytes",
-        "lines": "0 Lines"
-    },
-    "md": {
-        "size": "11585.880000000001 Bytes",
-        "lines": "259 Lines"
-    },
-    "png": {
-        "size": "225689.6 Bytes",
-        "lines": "0 Lines"
-    },
-    "js": {
-        "size": "47498.92 Bytes",
-        "lines": "1985 Lines"
-    },
-    "html": {
-        "size": "33070.28 Bytes",
-        "lines": "1097 Lines"
+    "sizeFormat": "Bytes",
+    "data": {
+        "txt": {
+            "size": 338,
+            "lines": 12
+        },
+        "css": {
+            "size": 937,
+            "lines": 70
+        },
+        "md": {
+            "size": 406,
+            "lines": 13
+        },
+        "js": {
+            "size": 5191.68,
+            "lines": 240
+        },
+        "html": {
+            "size": 844,
+            "lines": 27
+        }
     }
 }
 ```

@@ -2,6 +2,8 @@ package controller;
 
 import static org.junit.Assert.*;
 
+import java.io.IOException;
+
 import org.json.JSONObject;
 import org.junit.Test;
 
@@ -11,22 +13,19 @@ public class CrawlerControllerTest {
 	CrawlerCrontoller crawlerCrontoller = new CrawlerCrontoller();
 
 	@Test
-	public void crawGithubTest() {
+	public void crawGithubTest() throws IOException, InterruptedException {
 		JSONObject json = new JSONObject("{\r\n"
 				+ "    \"url\": \"https://github.com/bradtraversy/vanillawebprojects/tree/master/breakout-game\"\r\n"
 				+ "}");
-		JSONObject resultJson = new JSONObject(this.crawlerCrontoller.crawGithub(json));
-		JSONObject expectedJson = new JSONObject("{\r\n" + "    \"txt\": {\r\n"
-				+ "        \"size\": \"338.0 Bytes\",\r\n" + "        \"lines\": \"12 Lines\",\r\n"
-				+ "        \"occurrences\": \"1 Occurrences\"\r\n" + "    },\r\n" + "    \"css\": {\r\n"
-				+ "        \"size\": \"937.0 Bytes\",\r\n" + "        \"lines\": \"70 Lines\",\r\n"
-				+ "        \"occurrences\": \"1 Occurrences\"\r\n" + "    },\r\n" + "    \"md\": {\r\n"
-				+ "        \"size\": \"406.0 Bytes\",\r\n" + "        \"lines\": \"13 Lines\",\r\n"
-				+ "        \"occurrences\": \"1 Occurrences\"\r\n" + "    },\r\n" + "    \"js\": {\r\n"
-				+ "        \"size\": \"5191.68 Bytes\",\r\n" + "        \"lines\": \"240 Lines\",\r\n"
-				+ "        \"occurrences\": \"1 Occurrences\"\r\n" + "    },\r\n" + "    \"html\": {\r\n"
-				+ "        \"size\": \"844.0 Bytes\",\r\n" + "        \"lines\": \"27 Lines\",\r\n"
-				+ "        \"occurrences\": \"1 Occurrences\"\r\n" + "    }\r\n" + "}");
+		JSONObject resultJson = this.crawlerCrontoller.crawGithub(json);
+		JSONObject expectedJson = new JSONObject("{\r\n" + "    \"sizeFormat\": \"Bytes\",\r\n" + "    \"data\": {\r\n"
+				+ "        \"txt\": {\r\n" + "            \"size\": 338,\r\n" + "            \"lines\": 12\r\n"
+				+ "        },\r\n" + "        \"css\": {\r\n" + "            \"size\": 937,\r\n"
+				+ "            \"lines\": 70\r\n" + "        },\r\n" + "        \"md\": {\r\n"
+				+ "            \"size\": 406,\r\n" + "            \"lines\": 13\r\n" + "        },\r\n"
+				+ "        \"js\": {\r\n" + "            \"size\": 5191.68,\r\n" + "            \"lines\": 240\r\n"
+				+ "        },\r\n" + "        \"html\": {\r\n" + "            \"size\": 844,\r\n"
+				+ "            \"lines\": 27\r\n" + "        }\r\n" + "    }\r\n" + "}");
 		assertEquals(expectedJson.toString(), resultJson.toString());
 	}
 
