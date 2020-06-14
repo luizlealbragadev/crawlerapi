@@ -29,7 +29,7 @@ Knowing this, the second important information is the content of the header that
 Content-Type:application/json
 ```
 
-Now we need to pass the parameters of the body and just ahead you can see an example of what the request body should looks like:
+Now we need to pass the parameters of the body and just below you can see an example of what the request body should look like:
 
 ```
 {
@@ -46,7 +46,7 @@ Now what you need to know about the body parameters is that:
     1.2 - It must be a url from a public github repository.
     1.3 - Example: "https://github.com/bradtraversy/vanillawebprojects".
 2 - responseSizeFormat.
-    2.1 - The "responseSizeFormat" parameter is an optional field that defines the format of the size of the data return.
+    2.1 - The "responseSizeFormat" parameter is an optional field that defines the format of the size of the returned data.
     2.2 - You can either put it on the body or not.
         2.2.1 - If you don't put it on the body the default return type will be Bytes.
         2.2.2 - If you put it on the body your options are below.

@@ -1,8 +1,10 @@
 package com.luizlealbraga.crawlerapi.Control;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,21 +21,33 @@ public class CrawlerCrontoller {
 	DataSizeManipulator dataSizeManipulator = new DataSizeManipulator();
 
 	public String crawGithub(JSONObject json) {
-		String inputUrl = json.getString("url");
+		String inputUrl = json.optString("url");
 		String responseSizeFormat = json.optString("responseSizeFormat");
 
-		this.runCraw(inputUrl, responseSizeFormat);
-		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
-				.toJson(new CapturedDataDto().generateFormatedResult(this.map, responseSizeFormat));
+		try {
+			this.runCraw(inputUrl, responseSizeFormat);
+			return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+					.toJson(new CapturedDataDto().generateFormatedResult(this.map, responseSizeFormat));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "{ \"error\": \"The url you have requested is't valid.\"}";
+		}
 	}
 
-	public void runCraw(String inputUrl, String responseSizeFormat) {
+	public void runCraw(String inputUrl, String responseSizeFormat) throws IOException {
 		System.out.println(inputUrl);
 		URLReader urlReader = new URLReader();
 		String initialUrlContent = urlReader.getUrlHtml(inputUrl);
 		Pattern pattern = Pattern.compile("(css-truncate css-truncate-target.*\\\")/.*(?=\\\")");
 		Matcher matcher = pattern.matcher(initialUrlContent);
 
+		try {
+			TimeUnit.MILLISECONDS.sleep(150);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		List<String> listMatches = new ArrayList<String>();
 		while (matcher.find()) {
 			listMatches.add(matcher.group(0));
