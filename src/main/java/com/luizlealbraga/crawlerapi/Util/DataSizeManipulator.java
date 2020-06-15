@@ -3,7 +3,9 @@ package com.luizlealbraga.crawlerapi.Util;
 public class DataSizeManipulator {
 
 	public Double calculateSize(String size, String type, String rerturnType) {
-
+		// Here we can see the return type that we need to convert and if the return
+		// type is different of any possibilities or blank it will return Bytes as
+		// default.
 		switch (rerturnType.toLowerCase()) {
 		case "bytes":
 			return this.calculateSizeAsBytes(size, type.toLowerCase());
