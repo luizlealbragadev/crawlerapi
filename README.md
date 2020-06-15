@@ -88,3 +88,7 @@ Finally, if all steps were completed when making the request, you will get a ret
     }
 }
 ```
+
+## Final  considerations
+It is worth mentioning a great obstacle that I found in the middle of the road, which was the security of github, github has a limit of access on their pages and when this limit is over, it blocks the IP address in 60 seconds and can be extended up to 1 hour and this made the development with threads impossible since the generated blocking time increased faster.
+It is also worth mentioning that it is not useful to persist any captured data to generate a cache and return a second faster request because once the repository is updated I will be forced to go through all the files again.
